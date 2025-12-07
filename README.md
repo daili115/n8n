@@ -31,6 +31,33 @@ docker run -it --rm --name n8n -p 5678:5678 -v n8n_data:/home/node/.n8n docker.n
 
 Access the editor at http://localhost:5678
 
+## Deployment
+
+The recommended way to deploy n8n in a production environment is by using Docker. This repository includes a deployment script that simplifies the process of building and pushing the n8n Docker image to a registry.
+
+**Prerequisites:**
+- Docker installed and running.
+- A Docker Hub account (or another container registry).
+
+**Steps:**
+
+1.  **Set Environment Variables:**
+    Before running the script, you need to set your Docker registry credentials as environment variables:
+    ```bash
+    export DOCKER_USERNAME="your-docker-username"
+    export DOCKER_PASSWORD="your-docker-password-or-token"
+    ```
+
+2.  **Run the Deployment Script:**
+    Execute the `deploy-docker.sh` script from the root of the repository:
+    ```bash
+    ./scripts/deploy-docker.sh
+    ```
+    The script will build the n8n application, create a Docker image, and push it to your registry with both a version-specific tag and a `latest` tag.
+
+**Note on Cloudflare Workers:**
+An earlier version of our deployment process incorrectly used `npx wrangler deploy`. This is not the correct way to deploy n8n, as it is a full-fledged Node.js application and not a serverless function compatible with Cloudflare Workers. Please use the Docker deployment method described above.
+
 ## Resources
 
 - 📚 [Documentation](https://docs.n8n.io)
